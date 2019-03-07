@@ -1,11 +1,14 @@
 import os
 
-from flask import Flask, session,render_template
+from flask import Flask, session,render_template,url_for,request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+from werkzeug.security import generate_password_hash,check_password_hash
+
 
 app = Flask(__name__)
+app.secret_key='b17nvd^nksc'
 
 # Check for environment variable
 if not os.getenv("DATABASE_URL"):
@@ -27,8 +30,27 @@ def index():
 
 @app.route("/login")
 def login():
+    
     return render_template("login.html")
 
-@app.route("/register")
+@app.route("/register",methods=["GET","POST"])
 def register():
-    return render_template("register.html")
+  
+    if(request.method=="POST"):
+        if(not (request.form.get("username")) or not (request.form.get("password")) or not (request.form.get("cpassword"))):
+            return "Apology nothing shoud be none"
+        elif(not request.form.get("password")==request.form.get("cpassword")):
+            return "passwords not same"
+        hash=generate_password_hash(request.form.get("password"))
+
+        user=db.execute("SELECT * FROM users where username=:username",{"username":request.form.get("username")}).fetchone()
+        if user:
+            return "duplicate"
+        else:
+            db.execute("INSERT INTO users(username,password)VALUES(:user,:hash)",{"user":request.form.get("username"),"hash":hash})
+            db.commit()
+            session["username"]=request.form.get("username")
+            return "success"    
+            
+    else:
+          return render_template("register.html")
