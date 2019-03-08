@@ -28,10 +28,26 @@ db = scoped_session(sessionmaker(bind=engine))
 def index():
     return render_template("layout.html")
 
-@app.route("/login")
+@app.route("/login",methods=["GET","POST"])
 def login():
+    if(request.method=="POST"):
+        if(not (request.form.get("username")) or not (request.form.get("password"))):
+            return "Apology nothing shoud be none"
+        user=db.execute("SELECT * FROM users where username=:username",{"username":request.form.get("username")}).fetchone()
+        if not user:
+            return "username not found"
     
-    return render_template("login.html")
+        hash=db.execute("SELECT password FROM users WHERE username=:username",{"username":request.form.get("username")}).fetchone()
+        
+        if(check_password_hash(hash["password"],request.form.get("password"))):
+            return "success" 
+        else:
+            return "wrong password"   
+            
+    else:
+          return render_template("login.html")
+    
+  
 
 @app.route("/register",methods=["GET","POST"])
 def register():
