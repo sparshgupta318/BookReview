@@ -70,3 +70,7 @@ def register():
             
     else:
           return render_template("register.html")
+
+@app.route("/logout",methods=["GET","POST"])
+def logout():
+    

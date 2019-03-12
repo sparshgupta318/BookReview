@@ -3,15 +3,15 @@
 login
 {% endblock %}
 {% block body %}
-    <form action="url_for(login)" method="post">
+    <form action="{{url_for('login')}}" method="post">
         <div class="form-group">
             <label for="username">Usename</label>
-            <input class="form-control" id="username" placeholder="username" type="text"></input>
+            <input class="form-control" name="username" placeholder="username" type="text"></input>
 
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input class="form-control" id="password" placeholder="password" type="password"></input>
+            <input class="form-control" name="password" placeholder="password" type="password"></input>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
