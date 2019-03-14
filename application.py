@@ -71,6 +71,21 @@ def register():
     else:
           return render_template("register.html")
 
-@app.route("/logout",methods=["GET","POST"])
-def logout():
+
     
+
+@app.route("/search",methods=["GET","POST"])
+def search():
+    if(request.method=="POST"):
+            result=db.execute("SELECT * FROM books where isbn LIKE :q or title LIKE :q or author LIKE :q or year LIKE :q",{"q":'%'+request.form.get("search")+'%'}).fetchall()
+            if result is None:
+                return "NO MATCHES FOUND"
+            else:
+                return render_template("search.html",result=result)
+    else:
+       return  render_template("search.html")
+
+@app.route("/book/<string:isbn>")
+def books(isbn):
+    result=db.execute("SELECT * FROM books where isbn=:isbn",{"isbn":isbn}).fetchone()
+    return  render_template("books.html",result=result)
