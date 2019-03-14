@@ -1,5 +1,5 @@
 import os
-
+import requests
 from flask import Flask, session,render_template,url_for,request
 from flask_session import Session
 from sqlalchemy import create_engine
@@ -88,4 +88,6 @@ def search():
 @app.route("/book/<string:isbn>")
 def books(isbn):
     result=db.execute("SELECT * FROM books where isbn=:isbn",{"isbn":isbn}).fetchone()
-    return  render_template("books.html",result=result)
+    res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "XGwRVb91C7ZSmbwNetIg", "isbns": isbn}).json()
+    
+    return  render_template("books.html",result=result,res=res)

@@ -7,6 +7,21 @@ books
     <p>{{result.author}}</p>
     <p>{{result.year}}</p>
     <p>{{result.title}}</p>
+    <h4>Average Rating-{{res["books"][0]["average_rating"]}}</h4>
+    <h4>Total Number of Rating-{{res["books"][0]["work_ratings_count"]}}</h4>
 
+   
+<form>
+<div class="form-group ">
+    <label for="review">Review</label>
+    <input type="text" id="review" class="form-control" placeholder="Enter your review here">
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star checked"></span>
+    <span class="fa fa-star"></span>
+    <span class="fa fa-star"></span>
 
-{% endblock %}
+</div>
+    <button type="button" class="btn btn-primary">submit</button>
+</form>
+{% endblock %} 

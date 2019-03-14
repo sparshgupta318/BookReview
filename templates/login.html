@@ -3,16 +3,19 @@
 login
 {% endblock %}
 {% block body %}
-    <form action="{{url_for('login')}}" method="post">
-        <div class="form-group">
+    <form action="{{url_for('login')}}" method="post" class ="text-center">
+        <div class="form-group d-flex justify-content-center">
+            <div class="col-3">
             <label for="username">Usename</label>
             <input class="form-control" name="username" placeholder="username" type="text"></input>
-
         </div>
-        <div class="form-group">
+        </div>
+        <div class="form-group d-flex justify-content-center">
+                <div class="col-3 ">
             <label for="password">Password</label>
             <input class="form-control" name="password" placeholder="password" type="password"></input>
         </div>
+    </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 {% endblock %}
