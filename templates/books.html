@@ -9,19 +9,21 @@ books
     <p>{{result.title}}</p>
     <h4>Average Rating-{{res["books"][0]["average_rating"]}}</h4>
     <h4>Total Number of Rating-{{res["books"][0]["work_ratings_count"]}}</h4>
+    {% for reviews in review %}
+    <h5>Review-{{ reviews.review }}</h5>
+    <h5>Rating-{{ reviews.rating}}</h5>
+    {% endfor%}
 
    
-<form>
+<form action="{{ url_for('books',isbn=result.isbn) }}" method="post" >
 <div class="form-group ">
     <label for="review">Review</label>
-    <input type="text" id="review" class="form-control" placeholder="Enter your review here">
-    <span class="fa fa-star checked"></span>
-    <span class="fa fa-star checked"></span>
-    <span class="fa fa-star checked"></span>
-    <span class="fa fa-star"></span>
-    <span class="fa fa-star"></span>
-
+    <input type="text" id="review" name="review" class="form-control " placeholder="Enter your review here">
 </div>
-    <button type="button" class="btn btn-primary">submit</button>
+<div class="form-group">
+    <label for="rating">Rating</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" placeholder="Rating" class="form-control">
+</div>
+    <button type="submit" class="btn btn-primary">submit</button>
 </form>
 {% endblock %} 
