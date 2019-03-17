@@ -16,16 +16,21 @@
                     </button>
                   
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                         {%if user not in session%}
-                        <ul class="navbar-nav ml-auto">
+                     
+                         {% if 'user' not in session %}
+                         <ul class="navbar-nav ml-auto">
+                          <a href="{{url_for('login')}}"><button class="btn btn-success my-2 my-sm-0" type="submit">Login</button></a>
+                    </ul>    
+                         <ul class="navbar-nav ml-2">
                       <a href="{{url_for('register')}}"><button class="btn btn-success my-2 my-sm-0" type="submit">Sign Up</button></a>
                 </ul>    
+               
                 {% endif %}
-                {%if user in session%}
+                {% if 'user' in session %}
                 <ul class="navbar-nav ml-auto">
                         <a href="{{url_for('logout')}}"><button class="btn btn-success my-2 my-sm-0" type="submit">Logout</button></a>
                   </ul>    
-                {%endif%}
+                {% endif %}
                 </div>
                   </nav>
        {% block body %}{% endblock %}

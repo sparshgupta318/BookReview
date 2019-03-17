@@ -3,13 +3,17 @@
 search
 {% endblock %}
 {% block body %}
-<form class="form-inline my-2 my-lg-0" action="{{url_for('search')}}" method="post">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
+<div class="d-flex justify-content-center">
+<form class="form-inline  my-lg-0" action="{{url_for('search')}}" method="post">
+  
+    <input class="form-control my-2 mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search">
     <button class="btn btn-primary my-2 my-sm-0" type="submit">Search</button>
+   
   </form>
-  <h1>Search results</h1>
+</div>
+ 
   {% for results in result %}
-  <div>
+  <div  class="d-flex justify-content-center">
     <a href="{{url_for('books',isbn=results.isbn)}}">
     <p name="title">{{results["title"]}}</p></a>
   </div>

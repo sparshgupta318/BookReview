@@ -3,27 +3,50 @@
 books 
 {% endblock %}
 {% block body %}
-    <p>{{result.isbn}}</p>
-    <p>{{result.author}}</p>
-    <p>{{result.year}}</p>
-    <p>{{result.title}}</p>
-    <h4>Average Rating-{{res["books"][0]["average_rating"]}}</h4>
-    <h4>Total Number of Rating-{{res["books"][0]["work_ratings_count"]}}</h4>
-    {% for reviews in review %}
-    <h5>Review-{{ reviews.review }}</h5>
-    <h5>Rating-{{ reviews.rating}}</h5>
-    {% endfor%}
-
+<div class="text-center">
+    <h3>Book Title-{{result.title}}</h3>
+    <h3>Written by-{{result.author}} in the year {{result.year}}</h3>
+    <h3>ISBN-{{result.isbn}}</h3>  
+    <h3>Average Rating-{{res["books"][0]["average_rating"]}}</h3>
+    <h3>Total Number of Ratings-{{res["books"][0]["work_ratings_count"]}}</h3>
+ </div>  
+<form action="{{ url_for('books',isbn=result.isbn) }}" method="post" class="text-center">
    
-<form action="{{ url_for('books',isbn=result.isbn) }}" method="post" >
-<div class="form-group ">
+<div class="form-group d-flex justify-content-center ">
+        <div class="col-3 ">
     <label for="review">Review</label>
     <input type="text" id="review" name="review" class="form-control " placeholder="Enter your review here">
 </div>
-<div class="form-group">
-    <label for="rating">Rating</label>
-    <input type="number" id="rating" name="rating" min="1" max="5" placeholder="Rating" class="form-control">
 </div>
-    <button type="submit" class="btn btn-primary">submit</button>
+
+<div class="form-group d-flex justify-content-center">
+        <div class="col-3">
+    <label for="rating">Rating</label>
+    <input type="number" id="rating" name="rating" min="1" max="5" placeholder="Rating on scale of 1 to 5" class="form-control">
+</div>
+</div>
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+
+<table class="table table-striped">
+    <thead>
+     <tr>
+         <th class="text-center">User ID</th>
+         <th class="text-center">Review</th>
+         <th class="text-center">Rating</th>
+     </tr>
+       
+    </thead>
+    <tbody>
+        {% for reviews in review %}
+        <tr>
+            <td class="text-center">{{session.user}}</td>
+            <td class="text-center">{{reviews.review}}</td>
+            <td class="text-center">{{reviews.rating}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %} 
